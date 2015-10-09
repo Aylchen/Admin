@@ -1,0 +1,65 @@
+<include file="Public:header"/>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title"> <span class="icon"><i class="icon-file"></i></span>
+                    <h5>信息列表</h5>
+                    &nbsp;&nbsp;
+                    <a href="{$site_root}Index/notify_edit" style="margin-top: -12px;display:block;">
+                        <button class="btn btn-primary btn-mini">发布新信息</button>
+                    </a>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered data-table">
+                        <thead>
+                        <tr>
+                            <th>标题</th>
+                            <th>主图</th>
+                            <th>发布时间</th>
+                            <th style="width: 50%;">信息详情</th>
+                            <th>联系人</th>
+                            <th>电话</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead><!--1充值,2收益,3投资,4提现 1微信支付,2,线下转账,3余额支付,4其它-->
+                        <volist name="lists" id="each" empty="$empty">
+                            <tr class="gradeA ">
+
+                                <td>{$each.title}</td>
+                                <td><img src="{$each.pic}" width="60" height="60"/></td>
+                                <td>{$each.ctime}</td>
+                                <td>{$each.simply_c}</td>
+                                <td>{$each.contact}</td>
+                                <td>{$each.phone}</td>
+                                <td class="taskOptions">
+                                    <!--<eq name="record_each['status']" value="0">-->
+                                    <a title="编辑详情" href="{$site_root}Index/notify_edit/nid/{$each.id}">查看</a>
+                                    &nbsp;|&nbsp;
+                                    <a title="删除该条信息" href="javascript:void(0);" onclick="delNotify('{$each.id}')">删除</a>
+                                </td>
+                            </tr>
+                        </volist>
+                        <notempty name="lists">
+                            <tr>
+                                <td  class="pagination" colspan="9" style="text-align: right">{$page}</td>
+                            </tr></notempty>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<!--end-Footer-part-->
+<script>
+    function delNotify(nid){
+        if(confirm("确定要删除该信息吗？")){
+            $.post(site_root+encodeURIComponent("Index/delNotif"),{"nid":nid},function(){
+                  window.location = location.href;
+            })
+        }
+    }
+</script>
+<include file="Public:footer"/>

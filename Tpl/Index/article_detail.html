@@ -1,0 +1,74 @@
+<include file="Public:header"/>
+<link rel="stylesheet" href="{$resource_path}js/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{$resource_path}css/easydialog.css" />
+<style>
+    .update-done{max-width:100%;}
+    .easyDialog_wrapper{width:640px;}
+    .easyDialog_wrapper .easyDialog_text{height:400px;overflow: scroll;padding-top: 0;}
+</style>
+<div class="container-fluid">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6" style="position: relative;z-index: 999;">
+                <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"> <i class="icon-book"></i> </span>
+                        <h5>{$article['article_title']}</h5>
+
+                    </div>
+                    <div class="widget-content" style="padding: 0;">
+                        <div class="control-group">
+                            <form>
+                                <div class="controls">
+                        <textarea class="textarea_editor span12" placeholder="栏目详情" id="editor" style="height:590px;">
+                            {$article.content|html_entity_decode}
+                        </textarea>
+                                    <input type="hidden" name="content" id="aid" value="{$article.id}"/>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions scan-btn">
+                    <button type="button" class="btn btn-warning" style="float: right;"  id="scanbtn">预览</button>
+                    <button type="button" class="btn btn-success" style="float: right;margin-right: 1em;"  id="confirm">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    var editor;
+    $(function(){
+        $("#breadcrumb").append("<a href=\"javascript:void(0);\" class=\"current\">{$article['article_title']}</a> ");
+        $("#sidebar > ul > li:eq(5)").addClass('active');
+
+        $("#scanbtn").click(function(){
+            var html = editor.html();
+            easyDialog.open({container :{header : '预览效果',content : html}})
+        });
+
+        $("#confirm").click(function(){
+            $.post(site_root+encodeURIComponent("Program/doArticlePub"),{"content":editor.html(),"aid":$("#aid").val()},function(){
+                 location = site_root+"Index/article";
+            })
+        })
+        KindEditor.ready(function(K){
+            var options = {
+                items : ['bold','italic', 'underline', 'strikethrough', 'removeformat', '|',
+                    'selectall', 'fontname','fontsize', 'forecolor','|',
+                    'image','hr','source', '|',
+                    'justifyleft', 'justifycenter', 'justifyright','justifyfull', '|',
+                    'undo', 'redo', 'cut', 'copy', 'paste','plainpaste', 'wordpaste', '|',],
+                width : '100%',
+                height: '590px',
+                allowFileManager: true,
+                uploadJson : site_root+'File/UploadArticle'
+            }
+            editor = K.create('#editor', options);
+        });
+    })
+</script>
+<script src="{$resource_path}js/kindeditor/kindeditor-min.js" ></script>
+<script src="{$resource_path}js/easydialog.min.js"></script>
+<include file="Public:footer"/>

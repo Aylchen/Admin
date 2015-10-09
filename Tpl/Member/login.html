@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+        <title>众筹后台管理系统</title>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="stylesheet" href="{$resource_path}css/bootstrap.min.css" />
+		<link rel="stylesheet" href="{$resource_path}css/bootstrap-responsive.min.css" />
+        <link rel="stylesheet" href="{$resource_path}css/matrix-login.css" />
+        <link href="{$resource_path}font-awesome/css/font-awesome.css" rel="stylesheet" />
+	<script>var site_root = "{$site_root}"</script>
+    </head>
+    <body>
+        <div id="loginbox">            
+            <form id="loginform" class="form-vertical" onsubmit="return false;">
+				 <div class="control-group normal_text"> <h3>同城众筹</h3></div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_lg"><i class="icon-user"></i></span><input type="text" placeholder="用户名" name="username"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <div class="controls">
+                        <div class="main_input_box">
+                            <span class="add-on bg_ly"><i class="icon-lock"></i></span><input type="password" placeholder="密码" name="pwd"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <span class="pull-right">
+                    	<input type="submit" href="javascript:void(0);" class="btn btn-success" value=" 登录" onclick="checkLogin(this);"/>
+                    </span>
+                </div>
+            </form>
+        </div>
+        
+        <script src="{$resource_path}js/jquery.min.js"></script>  
+        <script src="{$resource_path}js/matrix.login.js?v=1"></script>
+    </body>
+
+</html>

@@ -1,0 +1,18 @@
+<div class="row-fluid">
+    <div id="footer" class="span12"> 2015 &copy; Plando
+    </div>
+</div>
+<!--end-Footer-part-->
+<script>
+    $(function(){
+        var nopic = "{$nopic}";
+        $("img").lazyload({placeholder:nopic});
+        $("img").error(function(){
+            this.src = nopic;
+        });
+        $('.tip-bottom').tooltip();
+    })
+</script>
+</body>
+
+</html>

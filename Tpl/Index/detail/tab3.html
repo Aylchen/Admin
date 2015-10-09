@@ -1,0 +1,86 @@
+<div id="tab3" class="tab-pane" style="position: relative;">
+    <span class="icon24 icomoon-icon-arrow-up-2 green"></span>
+    剩余时间：<span class="date badge badge-important">
+    <lt name="remain" value="0">已结束<else/>{$remain}天</lt>
+    </span>
+    <php>$left = $width = $project_info['got_amount']/$project_info['target_amount'];if($width>0.9){ $width=0.9;}</php>
+    <span style="position: absolute;top:40px;left:{$width*100}%;">
+        {$left*100}%
+        <gt name="project_info['got_amount']" value="10000">
+            （{$project_info['got_amount']/10000}万）
+            <else/>
+            （{$project_info['got_amount']}元）
+        </gt>
+    </span>
+    <span class="pull-right strong">
+    	<gt name="project_info['target_amount']" value="10000">
+            （{$project_info['target_amount']/10000}万）
+            <else/>
+            （{$project_info['target_amount']}元）
+        </gt>
+    </span>
+    <div class="progress progress-striped active">
+        <div class="bar" style="width: {$left*100}%;"></div>
+    </div>
+    <script>
+        var progress = parseFloat("{$left*100}");
+        var node = $(".progress");
+        if( progress < 30){
+            node.addClass("progress-danger");
+        }else if (progress < 50){
+            node.addClass("progress-warning");
+        }else if(progress > 80){
+            node.addClass("progress-success");
+        }
+    </script>
+    <div class="widget-box">
+        <div class="widget-title">
+            <h5>投资人列表</h5>
+        </div>
+        <div class="widget-content nopadding">
+            <table class="table data-table table-bordered">
+                <thead>
+                <tr>
+                    <th>投资人</th>
+                    <th>投资金额</th>
+                    <th>收益类型，回报</th>
+                    <th>投资日期</th>
+                    <th>收益结束时间</th>
+                </tr>
+                </thead>
+                <volist name="invests" id="invest_each">
+                <tr>
+                    <td class="taskDesc">
+                        <img data-original="{$invest_each.headimgurl}" width="40" height="40"/>
+                        {$invest_each.nickname}
+                    </td>
+                    <td class="taskStatus">
+                        <span class="done">
+                            <gt name="invest_each['amount']" value="10000">
+                                {$invest_each['amount']/10000}万
+                                <else/> {$invest_each.amount}
+                            </gt>
+                        </span>
+                    </td>
+                    <td class="taskStatus">
+                        <span class="in-progress">
+                            <eq name="project_info['profit_type']" value="2">
+                                    投资{$invest_each.cycle}元，收益：{$invest_each.profit}
+                                <else/>
+                                    投资{$invest_each.cycle}月，收益：{$invest_each.profit}%
+                            </eq>
+
+
+
+                        </span>
+                    </td>
+                    <td class="taskStatus"><span class="pending">{$invest_each.ctime}</span></td>
+                    <td class="taskStatus"><span class="done">{$invest_each.endtime}</span></td>
+                </tr>
+                </volist>
+            </table>
+        </div>
+    </div>
+
+</div>
+<script src="{$resource_path}js/jquery.dataTables.min.js"></script>

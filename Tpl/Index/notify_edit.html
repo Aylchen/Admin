@@ -1,0 +1,114 @@
+<include file="Public:header"/>
+<link rel="stylesheet" href="{$resource_path}js/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="{$resource_path}uploadify/uploadify.css?v-1" />
+<link rel="stylesheet" href="{$resource_path}css/easydialog.css" />
+<style>
+    #add-event{ float: left;}
+    .update-done{max-width:100%;}
+    #easyDialogTitle{line-height:20px;}
+    .easyDialog_wrapper{width:640px;}
+    .easyDialog_wrapper .easyDialog_text{height:400px;overflow: scroll;padding-top: 0;}
+    .ke-container{border:none;}
+    .label-remove{cursor:pointer;}
+    .inline-label{margin-right: 10px;line-height:30px;float:left;}
+    .upload-img-box{top:0px;}
+</style>
+<div class="container-fluid">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6" style="position: relative;">
+                <div class="control-group">
+                    <label class="control-label inline-label">标&nbsp;&nbsp;&nbsp;&nbsp;题：</label>
+                    <div class="controls">
+                        <input type="text" placeholder="请输入信息标题" class="span6" id="title" value="{$info.title}">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label inline-label">区&nbsp;&nbsp;&nbsp;&nbsp;县：</label>
+                    <div class="controls">
+                        <select id="area">
+                            <option value="">--汉中市--</option>
+                            <volist name="areas" id="area">
+                                <if condition="($area eq $info['area'])">
+                                    <option value="{$info['area']}" selected="selected">{$info['area']}</option>
+                                    <else/>
+                                    <option value="{$area}">{$area}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label inline-label">类&nbsp;&nbsp;&nbsp;&nbsp;型：</label>
+                    <div class="controls">
+                        <select id="type">
+                            <option value="">--请选择--</option>
+                            <volist name="types" id="t">
+                                <if condition="($t eq $info['type'])">
+                                    <option value="{$info['type']}" selected="selected">{$info['type']}</option>
+                                    <else/>
+                                    <option value="{$t}">{$t}</option>
+                                </if>
+                            </volist>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label inline-label">图&nbsp;&nbsp;&nbsp;&nbsp;片：</label>
+                    <div class="controls" style="position: relative;height: 210px;overflow: hidden;">
+                        <input type="file" id="upload_picture">
+
+                        <notempty name="info['pic']">
+                        <div class="upload-img-box" style="display: block;"><else/><div class="upload-img-box"></notempty>
+                            <div class="upload-pre-item2" style="width:240px;">
+                                <img src="{$info['pic']|default=$nopic}" style="height:180px !important;width:240px !important;">
+                            </div>
+                        </div>
+                        <br />
+                        <input type="hidden" name="img" value="{$info['pic']}" id="pic"/>
+                    </div>
+                </div>
+                <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"> <i class="icon-book"></i> </span>
+                        <h5>信息详情</h5>
+                    </div>
+                    <div class="widget-content" style="padding: 0;">
+                        <div class="control-group">
+                                <div>
+                                    <textarea class="textarea_editor span12" placeholder="content here" id="editor" style="height:590px;">
+                                        {$info.content|htmlspecialchars_decode}
+                                    </textarea>
+                                    <!--<input type="hidden" name="content" id="aid" value="{$article.id}"/>-->
+                                </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label inline-label">联系人：</label>
+                    <div class="controls">
+                        <input type="text" placeholder="请输入联系人姓名" class="span6" id="contact" value="{$info.contact}">
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label inline-label">电&nbsp;&nbsp;&nbsp;&nbsp;话：</label>
+                    <div class="controls">
+                        <input type="text" placeholder="请输入11位手机号码" class="span6" id="phone" maxlength="11" value="{$info.phone}">
+                    </div>
+                </div>
+                <div style="margin: 0 auto;border-top:none;">
+                    <input type="hidden" id="nid" value="{$info.id}"/>
+                    <button type="button" class="btn btn-warning" style="float: right;"  id="scanbtn">预览</button>
+                    <button type="button" class="btn btn-success" style="float: right;margin-right: 1em;"  id="confirm">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<script src="{$resource_path}js/kindeditor/kindeditor-min.js" ></script>
+<script src="{$resource_path}uploadify/jquery.uploadify.min.js"></script>
+<script src="{$resource_path}js/easydialog.min.js"></script>
+<script src="{$resource_path}js/module/notify.js"></script>
+<include file="Public:footer"/>

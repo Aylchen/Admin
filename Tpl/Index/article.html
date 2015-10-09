@@ -1,0 +1,67 @@
+<include file="Public:header"/>
+<style>
+    .update-done{max-width:100%;}
+    .new-update span{font-size:12px !important;}
+</style>
+<div class="container-fluid">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-title">
+                        <ul class="nav nav-tabs">
+                            <volist name="item_type" id="item" key="k">
+                                <eq name="k" value="1"><li class="active"><else/><li></eq><a data-toggle="tab" href="#tab{$k}">{$item}</a> </li>
+                            </volist>
+                        </ul>
+                    </div>
+                    <div class="widget-content tab-content">
+                        <div id="tab1" class="tab-pane active">
+                            <volist name="items[1]" id="type1">
+
+                            <div class="new-update clearfix">
+                                <i class="icon-ok-sign"></i>
+                                <div class="update-done">
+                                    <a href="{$site_root}Index/article_detail/article_id/{$type1.id}" title=""><strong>{$type1.article_title}</strong></a>
+                                    <span>{$type1.simply_c}...</span>
+                                </div>
+                                <!--<div class="update-date">
+                                    <span class="update-day">20</span>jan
+                                </div>-->
+                            </div>
+                            </volist>
+                        </div>
+                        <div id="tab2" class="tab-pane">
+                            <volist name="items[2]" id="type2">
+
+                                <div class="new-update clearfix">
+                                    <i class="icon-ok-sign"></i>
+                                    <div class="update-done">
+                                        <a href="{$site_root}Index/article_detail/article_id/{$type2.id}" title=""><strong>{$type2.article_title}</strong></a>
+                                        <span>{$type2.simply_c}...</span>
+                                    </div>
+                                </div>
+
+                            </volist>
+                        </div>
+                        <div id="tab3" class="tab-pane">
+                            <volist name="items[3]" id="type3">
+
+                                <div class="new-update clearfix">
+                                    <i class="icon-ok-sign"></i>
+                                    <div class="update-done">
+                                        <a href="{$site_root}Index/article_detail/article_id/{$type3.id}" title=""><strong>{$type3.article_title}</strong></a>
+                                        <span>{$type3.simply_c}...</span>
+                                    </div>
+                                </div>
+
+                            </volist>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<include file="Public:footer"/>

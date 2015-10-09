@@ -1,0 +1,150 @@
+<div class="span6">
+    <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-align-justify"></i> </span>
+            <h5>项目信息</h5>
+        </div>
+        <div class="widget-content nopadding form-horizontal">
+
+            <div class="control-group">
+                <label class="control-label">项目名称 ：</label>
+                <div class="controls">
+                    <input type="text" class="span11" name="title" data-required="required" value="{$project_info.title}"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">简要描述 ：</label>
+                <div class="controls">
+                    <textarea class="span11" name="desc" data-required="required">{$project_info.desc}</textarea>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">图片：</label>
+                <div class="controls" style="position: relative;height: 210px;overflow: hidden;">
+                    <input type="file" id="upload_picture">
+                    <notempty name="project_info['img']"><div class="upload-img-box" style="display: block;"><else/><div class="upload-img-box"></notempty>
+                    	<div class="upload-pre-item2" style="width:240px;">
+							<img src="{$project_info['img']|default=$nopic}" style="height:180px !important;width:240px !important;">
+                    	</div>
+                    </div>
+                    <br />
+                    <span class="help-inline img-tip">
+                        <!--如果您是企业，请提交营业执照；如果您是个人，请提交个人身份证扫描件或者照片，有助于快速通过审核。-->
+                        图片尺寸大小限制在640*480
+                    </span>
+                    <div class="actions">
+                        <a class="lightbox_trigger" href="{$project_info.img}">查看大图</a>
+                    </div>
+                    <input type="hidden" name="img" value="{$project_info.img}" id="img"/>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">众筹类型：</label>
+                <div class="controls">
+                    <select name="type"  data-required="required">
+                        <option value="">请选择</option>
+                        <volist name="tczc_types" id="tczc_type">
+                            <if condition="($project_info['type'] eq $tczc_type['typeId'])">
+                                <option value="{$project_info['type']}" selected="selected">{$tczc_type.typeName}</option>
+                                <else/>
+                                <option value="{$tczc_type.typeId}">{$tczc_type.typeName}</option>
+                            </if>
+                        </volist>
+
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+
+                <label class="control-label">收益类型：</label>
+                <div class="controls">
+                    <select name="profit_type" id="profit_type">
+                        <eq name="project_info['profit_type']" value="1"><option value="1" selected="selected"><else/><option value="1"></eq>年化收益类</option>
+                        <eq name="project_info['profit_type']" value="2"><option value="2" selected="selected"><else/><option value="2"></eq>实物类</option>
+                    </select>
+                </div>
+                <!-- 修改项目时 添加收益类型 -->
+                <div id="profit_type_ht">
+                    <eq name="project_info['profit_type']" value="2"><include file="./Tpl/Index/publish/profit_type2.html"/>
+                        <else/><include file="./Tpl/Index/publish/profit_type1.html"/>
+                    </eq>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">目标金额：</label>
+                <div class="controls">
+                    <div class="input-append">
+                        <input type="number" class="span11" name="target_amount" data-required="required" step="1000" value="{$project_info.target_amount}">
+                        <span class="add-on">￥</span>
+                    </div>
+                   <!-- <span class="help-block">期望的众筹金额</span>-->
+                </div>
+            </div>
+        <eq name="project_info['type']" value="4"><div class="control-group invest-base" style="display: none;"><else/><div class="control-group invest-base"></eq>
+                <label class="control-label">投资门槛：</label>
+                <div class="controls">
+                    <div class="input-append">
+                        <input type="number" class="span11" name="invest_base" data-required="required" value="{$project_info.invest_base}">
+                        <span class="add-on">￥</span>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">筹款结束时间：</label>
+                <div class="controls">
+                    <div data-date="{$project_info.collect_endtime|substr=0,10}" class="input-append date datepicker">
+                        <input type="text" value="{$project_info.collect_endtime|substr=0,10}" name="collect_endtime" class="span11" data-required="required" >&nbsp;
+                        <span class="add-on"><i class="icon-th"></i></span>
+                    </div>
+                </div>
+                <label class="control-label text-warning">筹款天数：</label>
+                <div class="controls">
+                    <div class="input-append">
+                        <input type="hidden" id="s_time" value="{$s_time|default=$n_time}"/>
+                        <input type="text" class="span11" min="1" name="need_days" readonly="readonly" value="{$project_info.need_days}">
+                        <span class="add-on">天</span>
+                    </div>
+                    <span class="help-inline">&nbsp;&nbsp;从项目发布日算起</span>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">托管方：</label>
+                <div class="controls">
+                    <input type="text" class="span11" name="trusteeship" data-required="required" value="{$project_info.trusteeship}">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">管理方：</label>
+                <div class="controls">
+                    <input type="text" class="span11" name="company_name" data-required="required" value="{$project_info.company_name}">
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label">联系人：</label>
+                <div class="controls">
+                    <input type="text" class="span11" name="contacts"  data-required="required" value="{$project_info.contacts}">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">联系电话：</label>
+                <div class="controls">
+                    <input type="text" class="span11" name="tel" data-required="required" value="{$project_info.tel}">
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label">联系地址：</label>
+                <div class="controls">
+                    <input type="text" class="span11" name="address"  data-required="required" value="{$project_info.address}">
+                </div>
+            </div>
+            <notempty name="type"><!-- project_id 用来区分 提交时是修改还是添加操作-->
+                <input type="hidden" name="project_id" value="{$project_info.project_id}"/>
+            </notempty>
+            <empty name="type">
+            <input type="hidden" name="project_requirement_id" id="project_requirement_id" value="{$project_info.project_id}"/>
+            </empty>
+            <input type="hidden" name="user_id" id="user_id" value="{$project_info.user_id}"/>
+        </div>
+    </div>
+</div>

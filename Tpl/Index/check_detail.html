@@ -1,0 +1,156 @@
+<include file="Public:header"/>
+		<style>
+			.update-done strong,.update-done span{float:left;}
+			.update-done span{text-indent: 2em;}
+		</style>
+
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="span6">
+						<div class="widget-box">
+							<div class="widget-title"> 
+								<h5>项目信息</h5>
+							</div>
+							<div class="widget-content nopadding updates">
+								<div class="new-update clearfix">
+									<div class="update-done">
+										<strong>申请时间</strong>
+										<span>{$project_info.ctime}</span>
+									</div>
+								</div>
+								<div class="new-update clearfix">
+									<div class="update-done">
+										<strong>项目标题</strong>
+										<span>{$project_info.title}</span>
+									</div>
+								</div>
+								<div class="new-update clearfix">
+									<div class="update-done">
+										<strong>项目描述</strong>
+										<span>{$project_info.desc}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="widget-box">
+							<div class="widget-title"> 
+								<h5>众筹目标</h5>
+							</div>
+							<div class="widget-content nopadding updates">
+								<div class="new-update clearfix">
+									<div class="update-done">
+										<strong>众筹类型</strong>
+										<span>
+                                            {$tczc_type_name[$project_info['type']]}
+                                        </span>
+									</div>
+								</div>
+								<div class="new-update clearfix">
+									<div class="update-done">
+										<strong>目标金额</strong>
+										<span>
+                                            <gt name="project_info['target_amount']" value="10000">
+                                                {$project_info['target_amount']/10000}万
+                                                <else/>
+                                                {$project_info['target_amount']}元
+                                            </gt>
+                                        </span>
+									</div>
+								</div>
+								<div class="new-update clearfix">
+									<div class="update-done">
+										<strong>筹款天数</strong>
+										<span>{$project_info.need_days}天</span>
+									</div>
+								</div>
+								<div class="new-update clearfix">
+									<div class="update-done">
+										<strong>还款周期</strong>
+										<span>{$project_info.repayment}天</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="span6">
+						<div class="widget-box">
+							<div class="widget-title"> 
+								<h5>申请人</h5>
+							</div>
+
+							<div class="widget-content nopadding updates">
+                                <div class="new-update clearfix">
+                                    <div class="update-done">
+                                        <strong>用户资料</strong>
+                                    <span>
+                                        <img data-original="{$project_info.headimgurl}" width="40" height="40"/>
+                                        {$project_info.nickname}
+                                    </span>
+                                    </div>
+                                </div>
+								<div class="new-update clearfix">
+									<div class="update-done">
+										<strong>公司名称</strong>
+										<span>{$project_info.company_name}</span>
+									</div>
+								</div>
+								<div class="new-update clearfix"> 
+									<div class="update-done">
+										<strong>&nbsp;联&nbsp;系&nbsp;人</strong>
+										<span>{$project_info.contacts}</span>
+									</div>
+								</div>
+								<div class="new-update clearfix">
+									<div class="update-done">
+										<strong>联系电话</strong>
+										<span>{$project_info.tel}</span>
+									</div>
+								</div>
+								<div class="new-update clearfix">
+									<div class="update-done">
+										<strong>联系地址</strong>
+										<span>{$project_info.address}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+                    <input type="hidden" id="project_id" value="{$project_info.project_id}"/>
+                    <empty name="isPublished">
+                        <eq name="project_info['status']" value="1">
+                        <div class="span6" >
+                            <ul class="quick-actions">
+                                <li class="bg_lb" onclick="checkAccess(1);">
+                                    <a href="javascript:void(0);">
+                                        <i class="icon-ok"></i>  通过
+                                    </a>
+                                </li>
+                                <li class="bg_lo">
+                                    <a href="javascript:void(0);"  onclick="checkAccess(2);">
+                                        <i class="icon-remove"></i>  未通过
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        </eq>
+                        <eq name="project_info['status']" value="2">
+                            <a class="btn btn-primary" style="margin-left:30px;" type="button" href="__URL__/publish/project_id/{$project_info.project_id}">发布项目</a>
+                        </eq>
+                    <else/>
+                           <a class="btn btn-primary" style="margin-left:30px;" type="button" href="__URL__/detail/project_id/{$isPublished.project_id}">项目已发布，查看详情</a>
+                    </empty>
+                    <eq name="project_info['status']" value="-1">
+                        <a class="badge opt-btn" style=" border-radius: 0;cursor: pointer;margin-left: 30px;padding: 5px 10px;" href="javascript:void(0);">审核未通过</a>
+                    </eq>
+				</div>
+			</div>
+			
+		</div>
+<script src="{$resource_path}js/module/project.js?v=2"></script>
+<script>
+$(function(){
+    $("#breadcrumb").append("<a href=\"javascript:void(0);\" class=\"current\">申请资料</a>");
+    $("#sidebar > ul > li:eq(1)").addClass('active');
+})
+</script>
+<include file="Public:footer"/>

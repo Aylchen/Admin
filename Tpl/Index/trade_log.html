@@ -1,0 +1,174 @@
+<include file="Public:header"/>
+<link href="{$resource_path}css/trade_log.css?v=5"  rel="stylesheet" />
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
+                        <h5>用户交易记录</h5>
+                        <a class="btn btn-success pull-left" data-toggle="modal" href="#myAlert" style="margin-top:3px;">线下充值</a>
+                    </div>
+                    <div class="widget-content nopadding">
+                        <table class="table table-bordered data-table">
+                            <thead>
+                            <tr>
+                                <th>用户信息
+                                    <div class="select2-search">
+                                        <input type="text" value="{$one.nickname}  {$one.tel}" placeholder="用户id，昵称，手机号" id="user_key">
+                                        <input type="hidden" value="{$one.user_id}" id="search_userid"/>
+                                        <span class="icon-search btn  user-search-btn" id="btn_search_one" style="top:0;right:4px;"></span>
+                                    </div>
+                                </th>
+                                <th >交易类型
+                                    <div class="btn-group">
+                                    <button data-toggle="dropdown" class="btn dropdown-toggle">{$type_array[$type]|default='全部'} <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="javascript:void(0);">全部</a></li>
+                                        <li><a href="javascript:void(0);">充值</a></li>
+                                        <li><a href="javascript:void(0);">收益</a></li>
+                                        <li><a href="javascript:void(0);">投资</a></li>
+                                        <li><a href="javascript:void(0);">提现</a></li>
+                                    </ul><input type="hidden" id="search_type" value="{$type|default=0}"/>
+                                    </div>
+                                </th>
+                                <th>支付方式
+                                    <div class="btn-group">
+                                        <button data-toggle="dropdown" class="btn dropdown-toggle">{$channel_array[$channel]|default='全部'} <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:void(0);">全部</a></li>
+                                            <li><a href="javascript:void(0);">微信支付</a></li>
+                                            <li><a href="javascript:void(0);">线下转账</a></li>
+                                            <li><a href="javascript:void(0);">余额支付</a></li>
+                                            <li><a href="javascript:void(0);">其他</a></li>
+                                        </ul><input type="hidden" id="search_channel" value="{$channel|default=0}"/>
+                                    </div>
+                                </th>
+                                <th>交易金额（元）</th>
+                                <th >交易状态
+                                    <div class="btn-group">
+                                        <button data-toggle="dropdown" class="btn dropdown-toggle">{$status_array[$status]|default='全部'} <span class="caret"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="javascript:void(0);">全部</a></li>
+                                            <li><a href="javascript:void(0);">进行中</a></li>
+                                            <li><a href="javascript:void(0);">已完成</a></li>
+                                        </ul><input type="hidden" id="search_status" value="{$status|default=0}"/>
+                                    </div>
+                                </th>
+                                <th>关联项目</th>
+                                <th style="width:120px;">备注</th>
+                                <th>交易时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead><!--1充值,2收益,3投资,4提现 1微信支付,2,线下转账,3余额支付,4其它-->
+                            <volist name="records" id="record_each" empty="$empty">
+                                <tr class="gradeA ">
+                                    <td>
+                                        <span>
+                                            <img width="40" height="40" data-original="{$record_each.headimgurl}" src="{$record_each.headimgurl|default=$nopic}">
+                                            {$record_each.nickname}
+                                        </span>
+                                        <input type="hidden" class="user_id" value="{$record_each.user_id}"/>
+                                    </td>
+                                    <td>
+                                        <switch name="record_each['trade_type']">
+                                            <case value="1"><span class="label label-important">充值</span></case>
+                                            <case value="2"><span class="label label-success">收益</span></case>
+                                            <case value="3"><span class="label label-warning">投资</span></case>
+                                            <case value="4"><span class="label label-info">提现</span></case>
+                                        </switch>
+                                    </td>
+                                    <td>
+                                        <switch name="record_each['channel']">
+                                            <case value="1"><span class="badge badge-success">微信支付</span></case>
+                                            <case value="2"><span class="badge badge-info">线下转账</span></case>
+                                            <case value="3"><span class="badge badge-warning">余额支付</span></case>
+                                            <case value="4"><span class="badge">其他</span></case>
+                                        </switch>
+                                    </td>
+                                    <td class="text-error">{$record_each['amount']|number_format=2}</td>
+                                    <eq name="record_each['status']" value="0">
+                                        <td class="text-error">进行中</td>
+                                        <else/>
+                                        <td class="text-success">已完成</td>
+                                    </eq>
+                                    <td>
+                                        <a href="__URL__/detail/project_id/{$record_each['relation_id']}">{$record_each.title}</a>
+                                    </td>
+                                    <td>{$record_each.remark}</td>
+                                    <td>{$record_each.ctime}</td>
+                                    <td class="taskOptions">
+                                        <!--<eq name="record_each['status']" value="0">-->
+										<a title="交易完成" href="javascript:void(0);" onclick="completeTrade('{$record_each.id}',1);">
+											<i class="icon-ok"></i>
+										</a><!--<br /></eq>-->
+										<!--<a title="删除记录" href="javascript:void(0);" onclick="completeTrade('{$record_each.id}',2);">
+											<i class="icon-remove"></i>
+										</a>-->
+                                    </td>
+                                </tr>
+                            </volist>
+                            <notempty name="records">
+                            <tr>
+                                <td  class="pagination" colspan="9" style="text-align: right">{$page}</td>
+                            </tr></notempty>
+                        </table>
+
+                    </div>
+                    <div id="myAlert" class="modal hide" style="margin-top: 10%;">
+						<div class="modal-header">
+							<button data-dismiss="modal" class="close" type="button">×</button>
+							<h3>线下充值</h3>
+						</div>
+						<div class="modal-body">
+							<div class="widget-content nopadding" style="border-bottom: none;">
+								<div class="form-horizontal">
+									<div>
+							            <label class="control-label">用户id：</label>
+							            <div class="controls">
+							                <!--<select id="user_id">
+							                	<option value="" selected="selected">请选择用户</option>
+							                </select>-->
+                                            <input type="hidden" value="" id="user_id"/>
+                                            <div class="select2-search" style="width:307px;">
+                                                <input type="text" value="" placeholder="用户id，昵称，手机号" id="user_key2">
+                                                <button class="icon-search btn " id="btn_search_two"  style="right:42px;"></button>
+                                            </div>
+							            </div>
+
+							        </div>
+							        <div>
+							            <label class="control-label">充值金额：</label>
+							            <div class="controls">
+							                <div class="input-append">
+							                    <input type="number" class="span11" id="amount">
+							                    <span class="add-on">￥</span>
+							                </div>
+							            </div>
+							        </div>
+							        <div>
+							            <label class="control-label">备注：</label>
+							            <div class="controls">
+							                   <textarea class="span11" id="remark"></textarea>
+							            </div>
+							        </div>
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer"> 
+							<button class="btn btn-primary" onclick="addAccountRecord(this);">确认</button> 
+							<a data-dismiss="modal" class="btn" href="#">取消</a> 
+						</div>
+					</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--end-Footer-part-->
+<!--<script src="{$resource_path}js/jquery.dataTables.min.js"></script>-->
+<script src="{$resource_path}js/select2.min.js?v=1"></script>
+<script src="{$resource_path}js/module/project.js?v=4"></script>
+<script src="{$resource_path}js/jquery.cookie.js"></script>
+<script src="{$resource_path}js/module/trade_log.js?v=3"></script>
+<include file="Public:footer"/>

@@ -1,0 +1,44 @@
+<div id="tab2" class="tab-pane">
+    <!-- 周期类型1,day 2,month -->
+    <div class="widget-box">
+        <div class="widget-content nopadding">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <eq name="project_info['profit_type']" value="2">
+
+                        <th>投资金额（元）</th>
+                        <th>回报</th>
+                        <else/>
+                        <th>项目周期（月）</th>
+                        <th>年化收益率</th>
+                    </eq>
+
+                </tr>
+                </thead>
+                <volist name="cycle_info" id="cycle_info_each">
+                    <eq name="project_info['profit_type']" value="2">
+                        <tr>
+                            <td class="taskStatus">
+                                <span class="text-error">{$cycle_info_each.cycle}</span>
+                            </td>
+                            <td class="taskStatus"><span class="done">{$cycle_info_each.profit}</span></td>
+                        </tr>
+                        <else/>
+                        <tr>
+                            <td class="taskStatus">
+                            <span class="text-error">
+                            <eq name="cycle_info_each['cycle_type']" value="1">
+                                {$cycle_info_each['cycle']/30}<else/>{$cycle_info_each.cycle}
+                            </eq>
+                            </span>
+                            </td>
+                            <td class="taskStatus"><span class="done">{$cycle_info_each.profit}%</span></td>
+                        </tr>
+                    </eq>
+
+                </volist>
+            </table>
+        </div>
+    </div>
+</div>

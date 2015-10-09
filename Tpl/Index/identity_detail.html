@@ -1,0 +1,114 @@
+<include file="Public:header"/>
+<style>
+    .update-done strong,.update-done span{float:left;}
+    .update-done strong{width:70px;}
+    .update-done span{text-indent: 2em;}
+    .iv_pic img {width:400px;height: auto;margin:0 auto;}
+    .iv_pic .widget-content{text-align:center;}
+    .status{ border-radius: 0;font-size: 16px;margin-left: 30px; margin-top: 16px;padding: 12px;position:fixed;}
+    article{postion:fixed;margin-top:50px;}
+</style>
+
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span6">
+            <div class="widget-box">
+                <div class="widget-title">
+                    <h5>申请人资料</h5>
+                </div>
+                <div class="widget-content nopadding updates">
+                    <div class="new-update clearfix">
+                        <div class="update-done">
+                            <strong>姓名：</strong>
+                            <span>{$iv.real_name}</span>
+                        </div>
+                    </div>
+                    <div class="new-update clearfix">
+                        <div class="update-done">
+                            <strong>身份证号：</strong>
+                            <span>{$iv.idno}</span>
+                        </div>
+                    </div>
+                    <div class="new-update clearfix">
+                        <div class="update-done">
+                            <strong>手机号：</strong>
+                            <span>{$iv.tel}</span>
+                        </div>
+                    </div>
+                    <div class="new-update clearfix">
+                        <div class="update-done">
+                            <strong>申请时间：</strong>
+                            <span>{$iv.ctime}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-box iv_pic">
+                <div class="widget-title">
+                    <h5>身份证</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <img data-original="{$iv.id_no}" />
+                    <div class="actions">
+                        <a class="lightbox_trigger" href="{$iv.id_no}">
+                            查看大图
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="widget-box iv_pic">
+                <div class="widget-title">
+                    <h5>营业执照</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <img data-original="{$iv.bussiness_license}" />
+                    <div class="actions">
+                        <a class="lightbox_trigger" href="{$iv.bussiness_license}">
+                            查看大图
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+            <div class="span6" >
+                <eq name="iv['status']" value="1">
+                    <ul class="quick-actions" style="position:fixed">
+                        <li class="bg_lb">
+                            <a href="javascript:void(0);" onclick="accessIv('{$iv.user_id}');">
+                                <i class="icon-ok"></i>  通过
+                            </a>
+                        </li>
+                        <li class="bg_lo">
+                            <a href="javascript:void(0);"  onclick="noAccess();">
+                                <i class="icon-remove"></i>  未通过
+                            </a>
+                        </li>
+                    </ul>
+                    <div id="reason_modal" class="modal hide" style="left: 75%;top: 25%;width:350px;">
+                        <div class="modal-header">
+                            <h3>请填写该资料未通过审核原因</h3>
+                        </div>
+                        <div class="modal-body">
+                            <textarea style="width:305px;" rows="3" id="reason"></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <a data-dismiss="modal" class="btn" href="javascript:void(0);" onclick="cancleModal();">取消</a>
+                            <a class="btn btn-primary" id="add-event-submit" href="javascript:void(0);" onclick="noAccessIv('{$iv.user_id}');">确定</a>
+                        </div>
+                    </div>
+                </eq>
+                <eq name="iv['status']" value="2">
+                    <span class="badge-success badge status"  type="button">审核已通过</span>
+                </eq>
+                <eq name="iv['status']" value="3">
+                    <span class=" badge status"  type="button">审核未通过：<span class="text-error">{$iv.iv_failed}</span></span>
+                </eq>
+            </div>
+    </div>
+</div>
+
+</div>
+<script src="{$resource_path}js/module/iv.js?v-2"></script>
+<include file="Public:footer"/>

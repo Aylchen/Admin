@@ -1,0 +1,66 @@
+<include file="Public:header"/>
+<link rel="stylesheet" href="{$resource_path}css/trade_log.css" />
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-content nopadding" >
+                    <div class="widget-title">
+                        <h5>实名认证审核</h5>
+                            <div class="project-status">
+                                &nbsp;&nbsp;审核状态:&nbsp;
+                                <div class="btn-group">
+                                    <button class="btn dropdown-toggle" data-toggle="dropdown">{$statusArr[$search]|default="全部"} <span class="caret"></span></button>
+                                    <ul class="dropdown-menu">
+                                        <volist name="statusArr" id="statusName">
+                                            <li><a href="javascript:void(0);">{$statusName}</a></li>
+                                        </volist>
+                                    </ul>
+                                </div>
+                            </div>
+                    </div>
+                    <table class="table table-bordered data-table">
+                        <volist name="list" id="each" empty="$empty">
+                            <tr class="gradeA ">
+                                <td>
+                                    <div class="user-thumb" style="margin:10px 10px 0;">
+                                        <img width="40" height="40" style="height:100%;" alt="{$each.nickname}" data-original="{$each['headimgurl']}">
+                                    </div>
+                                    <div class="new-update clearfix" style="border-top: none">
+                                        <div class="update-done">
+                                            <span class="user-info">&nbsp;&nbsp;&nbsp;&nbsp;申请人： {$each.nickname} </span>
+                                        </div>
+                                        <div class="update-date">
+                                            <span class="update-day">{$each.ctime|substr=8,2}</span>{$each.ctime|substr=5,2}月
+                                        </div>
+                                        <eq name="each['status']" value="1">
+                                            <a class="badge badge-info opt-btn" style="cursor: pointer;" href="{$site_root}Index/identity_detail/iv_id/{$each.user_id}">去审核 >></a>
+                                        </eq>
+                                        <eq name="each['status']" value="2">
+                                            <a class="badge badge-success opt-btn" style="cursor: pointer;" href="{$site_root}Index/identity_detail/iv_id/{$each.user_id}">审核通过 >></a>
+                                        </eq>
+                                        <eq name="each['status']" value="3">
+                                            <a class="badge opt-btn" style="cursor: pointer;" href="{$site_root}Index/identity_detail/iv_id/{$each.user_id}">审核未通过 >></a>
+                                        </eq>
+
+
+                                        <!--<span class=" badge opt-btn" >未通过审核</span>-->
+                                    </div>
+                                </td>
+                            </tr>
+                        </volist>
+                        <notempty name="list">
+                            <tr>
+                                <td  class="pagination" colspan="11" style="text-align: right">{$page}</td>
+                            </tr>
+                        </notempty>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<script src="{$resource_path}js/module/iv.js"></script>
+<include file="Public:footer"/>

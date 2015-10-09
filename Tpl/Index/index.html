@@ -1,0 +1,104 @@
+<include file="Public:header"/>
+<link rel="stylesheet" href="{$resource_path}css/trade_log.css?v=1" />
+<style>
+    .dataTables_filter{top:0;}
+    .label{position: absolute;right: 5%;}
+    .progress {margin-top: 28px;position: absolute;right: 7%;width: 10%;  }
+    .progress-label{bottom: 3px;position: absolute; right: 5%;}
+    .user-info{float:left;}
+    .hidden{display: none !important;}
+    td{cursor: pointer;}
+    .project-status{position:relative;}
+</style>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-content nopadding" >
+						<div class="widget-title"> 
+	                        <h5>项目管理</h5>
+	                        <form action="{$site_root}Index/index" method="post">
+	                        <div class="project-key">
+	                            <input type="text" name="project_key" id="project_key" placeholder="项目名称" value="{$project_name}">
+	                            <span id="btn_search_one" class="icon-search btn "></span>
+	                        </div>
+                                <div class="project-key">&nbsp;
+                                    <input type="text" name="require_user" id="require_user" placeholder="发起人id，昵称，手机号" value="{$require_user}">
+                                    <input type="hidden" name="user_id" id="user_id" value="{$user_id}"/>
+                                    <span id="btn_search_user" class="icon-search btn "></span>
+                                </div>
+	                        <div class="project-status">
+	                        	&nbsp;&nbsp;项目状态:&nbsp;
+	                        	<select name="project_status" id="project_status">
+	                        		<option value="">全部</option>
+	                        		<eq name="project_status" value="3"><option value="3" selected="selected"><else/><option value="3"></eq>
+	                        		正在筹款中</option>
+	                        		<eq name="project_status" value="4"><option value="4" selected="selected"><else/><option value="4"></eq>
+	                        			筹集完成，收益进行中</option>
+	                        		<eq name="project_status" value="5"><option value="5" selected="selected"><else/><option value="5"></eq>
+	                        			收益完成，项目结束</option>
+	                        	</select>
+	                        </div>
+	                        </form>
+                    	</div>
+                        <table class="table table-bordered data-table">
+                            <volist name="projects" id="project" key="k" empty="$empty">
+                            <tr class="gradeA ">
+                                <td onclick="location='{$site_root}Index/detail/project_id/{$project.project_id}'">
+                                    <div class="user-thumb">
+                                        <img width="40" height="40" style="height:100%" alt="{$project.img}" data-original="{$project.img|default=$nopic}"/>
+                                    </div>
+                                    <div class="new-update clearfix" style="border-top: none;position: relative;">
+                                        <div class="update-done">
+                                            <a href="#" title="{$project.title}" style="float: left;">
+                                                <strong>{$project.title} </strong>
+                                            </a>
+                                            <if condition="($platform_id eq $project['user_id'])">
+                                                <span class="date badge badge-important" style="float: left;margin-left:1em;">
+                                                    平台发起
+                                                </span>
+                                            <else/>
+                                                <span class="user-info">&nbsp;&nbsp;&nbsp;&nbsp;发起人：
+                                                    <a href="{$site_root}Index/muser/user_id/{$project.user_id}">{$project.nickname}</a>
+                                                </span>
+                                            </if>
+                                            <span class="hidden">{$project.user_id}</span>
+                                            <span style="clear: both">{$project.desc}</span>
+                                        </div>
+                                        <eq name="project.status" value="3">
+                                            <span class="label badge badge-important">正在筹款中</span>
+                                        </eq>
+                                        <eq name="project.status" value="4">
+                                            <span class="label badge badge-info">筹集完成，收益进行中</span>
+                                            <span class="progress-label">{$project['got_amount']/$project['target_amount']*100}%</span>
+                                            <div class="progress progress-striped active">
+                                                <div class="bar" style="width: 0%;"></div>
+                                            </div>
+                                        </eq>
+                                        <eq name="project.status" value="5">
+                                        	<span class="label badge badge-success">收益完成，项目结束</span>
+                                        </eq>
+                                        <div class="update-date">
+                                            <span class="update-day">{$project.ctime|substr=8,2}</span>{$project.ctime|substr=5,2}月
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </volist>
+                            <notempty name="projects">
+                            <tr>
+                                <td  class="pagination" style="text-align: right">{$page}</td>
+                            </tr></notempty>
+                        </table>
+						
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{$resource_path}js/select2.min.js?v=1"></script>
+<script src="{$resource_path}js/module/index.js?v=2"></script>
+<include file="Public:footer"/>

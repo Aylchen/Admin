@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>众筹后台管理系统</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{$resource_path}css/bootstrap.min.css?v-2" />
+    <link rel="stylesheet" href="{$resource_path}css/matrix-media.css" />
+    <link rel="stylesheet" href="{$resource_path}css/matrix-style.css" />
+    <link rel="stylesheet" href="{$resource_path}css/select2.css" />
+    <link href="{$resource_path}font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <script src="{$resource_path}js/jquery.min.js"></script>
+    <script src="{$resource_path}js/bootstrap.min.js"></script>
+    <script src="{$resource_path}js/MsgBox.js"></script>
+    <script src="{$resource_path}js/jquery.lazyload.min.js?v=1"></script>
+    <script>
+        var site_root = "{$site_root}";
+        var resource_path = "{$resource_path}";
+    </script>
+</head>
+<body>
+<!--Header-part-->
+<div id="header">
+    <h1><a href="dashboard.html">众筹</a></h1>
+</div>
+<div id="search">
+    <a title="" href="{$site_root}Member/logout"><i class="icon icon-share-alt"></i> <span class="text">登出</span></a>
+</div>
+<div id="sidebar">
+    <ul>
+        <eq name="Think.ACTION_NAME" value="index"><li class="active"><else/><li></eq>
+            <a href="{$site_root}/Index/index"><i class="icon icon-home"></i> <span>项目管理</span></a> </li>
+        <eq name="Think.ACTION_NAME" value="check"><li class="active"><else/><li></eq>
+            <a href="{$site_root}/Index/check"><i class="icon icon-check"></i> <span>项目审核</span>
+            <gt name="toCheck" value="0"><span class="label label-important">待审核&nbsp;{$toCheck}</span></gt>
+            </a> </li>
+        <eq name="Think.ACTION_NAME" value="publish"><li class="active"><else/><li></eq>
+            <a href="{$site_root}/Index/publish"><i class="icon icon-pencil"></i> <span>发起项目</span></a> </li>
+        <eq name="Think.ACTION_NAME" value="muser"><li class="active"><else/><li></eq>
+            <a href="{$site_root}/Index/muser"><i class="icon icon-user"></i> <span>用户管理</span></a> </li>
+        <eq name="Think.ACTION_NAME" value="trade_log"><li class="active"><else/><li></eq>
+            <a href="{$site_root}/Index/trade_log"><i class="icon icon-tasks"></i> <span>交易记录</span>
+            <gt name="trade_count" value="0"><span class="label label-important">待处理&nbsp;{$trade_count}</span></gt>
+        	</a>  </li>
+        <eq name="Think.ACTION_NAME" value="identity"><li class="active"><else/><li></eq>
+        <a href="{$site_root}/Index/identity"><i class="icon icon-exclamation-sign"></i> <span>实名认证</span>
+             <gt name="iv_count" value="0"><span class="label label-important">待处理&nbsp;{$iv_count}</span></gt>
+        </a>  </li>
+        <eq name="Think.ACTION_NAME" value="article"><li class="active"><else/><li></eq>
+            <a href="{$site_root}/Index/article"><i class="icon icon-indent-right"></i> <span>平台公示</span></a> </li>
+        <eq name="Think.ACTION_NAME" value="notify"><li class="active"><else/><li></eq>
+        <a href="{$site_root}/Index/notify"><i class="icon icon-file"></i> <span>信息发布</span></a> </li>
+    </ul>
+</div>
+<!--main-container-part-->
+<div id="content">
+    <!--breadcrumbs-->
+    <div id="content-header">
+        <div id="breadcrumb"> <a href="{$href}" title="{$title}" class="tip-bottom"><i class="icon-home"></i> {$title}</a>
+        </div>
+    </div>

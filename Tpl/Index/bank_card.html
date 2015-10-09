@@ -1,0 +1,50 @@
+<include file="Public:header"/>
+<style>td{text-align: center !important;}</style>
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-title"> <span class="icon"><i class="icon-user"></i></span>
+                    <h5>银行卡管理</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <!--<th>用户ID</th>
+                            <th>openid</th>-->
+                            <th>姓名</th>
+                            <th>卡号</th>
+                            <th>开户银行</th>
+                            <th>开户行地址</th>
+                            <th>省市</th>
+                            <th>是否默认</th>
+                        </tr>
+                        </thead>
+                        <volist name="bankcards" id="bankcard" empty="$empty">
+                            <tr class="gradeA ">
+                                <td>{$bankcard.card_owner}</td>
+                                <td>{$bankcard.card_no|str_split=4|implode=' '}</td>
+                                <td>{$bankcard.bank_name}</td>
+                                <td>{$bankcard.sub_bank_name}</td>
+                                <td>{$bankcard.province}{$bankcard.city}</td>
+                                <td>
+                                    <eq name="bankcard['is_default']" value="1"><span class="by label label-success">当前默认</span></eq>
+                                </td>
+                            </tr>
+                        </volist>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    $(function(){
+        $("#breadcrumb").append("<a href=\"javascript:void(0);\" class=\"current\">银行卡管理</a> ");
+        $("#sidebar > ul > li:eq(3)").addClass('active');
+    })
+</script>
+<include file="Public:footer"/>

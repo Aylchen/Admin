@@ -1,0 +1,88 @@
+<include file="Public:header"/>
+<link rel="stylesheet" href="{$resource_path}css/uniform.css" />
+<link rel="stylesheet" href="{$resource_path}css/trade_log.css" />
+<div class="container-fluid">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="widget-box">
+                <div class="widget-content nopadding" >
+                    <div class="widget-title">
+                        <h5>项目审核</h5>
+                        <form action="{$site_root}Index/check" method="post">
+                            <div class="project-key">
+                                <input type="text" name="require_user" id="require_user" placeholder="发起人id，昵称，手机号" value="{$require_user}">
+                                <input type="hidden" name="user_id" id="user_id" value="{$user_id}"/>
+                                <span id="btn_search_user" class="icon-search btn "></span>
+                            </div>
+                            <!--<div class="project-key">
+                                &nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="pub_user" id="pub_user"  placeholder="项目发起人" value="">
+                                <button id="btn_search_user" class="icon-search btn "></button>
+                            </div>-->
+                            <div class="project-status">
+                                &nbsp;&nbsp;项目状态:&nbsp;
+                                <select name="require_status" id="require_status">
+                                    <option value="0">全部</option>
+                                    <eq name="require_status" value="1"><option value="1" selected="selected"><else/><option value="1"></eq>
+                                    待审核</option>
+                                    <eq name="require_status" value="2"><option value="2" selected="selected"><else/><option value="2"></eq>
+                                    已审核</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <table class="table table-bordered data-table">
+                        <volist name="projects" id="project" empty="$empty">
+                            <tr class="gradeA ">
+                                <td>
+                                    <div class="user-thumb" style="margin:10px 10px 0;">
+                                        <img width="40" height="40" style="height:100%;" alt="{$project.title}" data-original="{$project['img']}">
+                                    </div>
+                                    <div class="new-update clearfix" style="border-top: none">
+                                        <div class="update-done">
+                                            <a href="__URL__/check_detail/project_id/{$project.project_id}" title="{$project.title}" style="float: left;">
+                                                <strong>{$project.title}</strong>
+                                            </a>
+                                            <span class="user-info">&nbsp;&nbsp;&nbsp;&nbsp;发起人：
+                                                <a href="__URL__/muser/user_id/{$project.userInfo.user_id}">{$project.userInfo.nickname}</a>
+                                            </span>
+                                            <span class="hidden">{$project.userInfo.union_id} {$project.userInfo.tel}</span>
+                                            <span style="clear: both;">{$project.desc}</span>
+                                        </div>
+                                        <div class="update-date">
+                                            <span class="update-day">{$project.ctime|substr=8,2}</span>{$project.ctime|substr=5,2}月
+                                            <span class="hidden">{$project.ctime}</span>
+                                        </div>
+                                        <if condition="($project['status'] eq 1)">
+                                            <a class="badge badge-info opt-btn" style="cursor: pointer;" href="__URL__/check_detail/project_id/{$project.project_id}">去审核 >></a>
+
+                                            <elseif condition="($project['status'] eq -1)"/>
+                                            <a class="badge opt-btn" style="cursor: pointer;" href="__URL__/check_detail/project_id/{$project.project_id}">审核未通过 >></a>
+                                            <else/>
+                                            <gt name="project['isPublished']" value="0">
+                                                <a class=" badge badge-success opt-btn" href="__URL__/check_detail/project_id/{$project.project_id}" style="background:#468847">已发布 >> </a>
+                                                <else/>
+                                                <a class=" badge badge-warning opt-btn" href="__URL__/check_detail/project_id/{$project.project_id}">已审核，待发布</a>
+                                            </gt>
+                                        </if>
+
+                                        <!--<span class=" badge opt-btn" >未通过审核</span>-->
+                                    </div>
+                                </td>
+                            </tr>
+                        </volist>
+                        <notempty name="projects">
+                            <tr>
+                                <td  class="pagination" colspan="11" style="text-align: right">{$page}</td>
+                            </tr>
+                        </notempty>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+<script src="{$resource_path}js/select2.min.js?v=1"></script>
+<script src="{$resource_path}js/module/index.js?v=4"></script>
+<include file="Public:footer"/>

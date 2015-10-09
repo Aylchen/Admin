@@ -1,0 +1,23 @@
+<div class="span6" style="position: relative;z-index: 999;">
+    <div class="widget-box">
+        <div class="widget-title"> <span class="icon"> <i class="icon-book"></i> </span>
+            <h5>项目详情<!--<span class="user-info" style="font-weight: normal">&nbsp;&nbsp;如需上传图片，直接拖入即可</span>--></h5>
+
+        </div>
+        <div class="widget-content" style="padding: 0;">
+            <div class="control-group">
+                <form>
+                    <div class="controls">
+                        <textarea class="textarea_editor span12" rows="6" placeholder="图文详情" id="editor">
+                            {$project_info.content|htmlspecialchars_decode}
+                        </textarea>
+                        <input type="hidden" name="content" id="content_form" value="{$project_info.content}"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="form-actions scan-btn">
+        <button type="button" class="btn btn-warning" style="float: right;"  id="scanbtn">预览</button>
+    </div>
+</div>

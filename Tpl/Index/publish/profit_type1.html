@@ -1,0 +1,47 @@
+<if condition="($type eq 1)">
+    <input type="hidden" name="cycle_number" id="cycle_number" value="{$cycles|count}" /><!-- 收益类型总数-->
+    <volist name="cycles" id="cycle_each" key="k">
+        <div class="controls">
+            <div class="input-append input-append-cycle">
+                <input type="number" class="span11 cycle-cycle" data-required="required" min="1" name="cycle{$k}" value="{$cycle_each.cycle}" style="width: 50%;">
+                        <span class="add-on" style="width:40px;">
+                            <select name="cycle_type{$k}" class="cycle-select">
+                                <option value="2" selected="selected"> 月</option>
+                                <!--<eq name="cycle_each['cycle_type']" value="1">
+                                    <option value="1" selected="selected"><else/><option value="1">
+                                </eq> 天</option>-->
+                            </select>
+                        </span>
+            </div>
+            年化收益率：<input type="number" style="width:35px;" name="profit{$k}" value="{$cycle_each.profit}" class="cycle-profit" min="0" max="100" data-required="required"/>%
+            &nbsp;&nbsp;&nbsp; &nbsp;
+            <a class="sAdd btn btn-primary" href="javascript:void(0);" title="" onclick="addCycle(this);">
+                <i class="icon-plus"></i>
+            </a>
+            <gt name="k" value="1">
+                <a class="sAdd btn btn-primary" href="javascript:void(0);" onclick="minCycle(this);">
+                    <i class="icon-minus"></i>
+                </a>
+            </gt>
+        </div>
+
+    </volist>
+    <else/>
+    <input type="hidden" name="cycle_number" id="cycle_number" value="1" /><!-- 收益类型总数-->
+    <div class="controls">
+        <div class="input-append  input-append-cycle">
+            <input type="number" class="span11 cycle-cycle" data-required="required" min="1" name="cycle1" style="width: 50%;">
+                        <span class="add-on" style="width:40px;">
+                            <select name="cycle_type1" class="cycle-select">
+                                <option value="2" selected="selected">月</option>
+                                <!--<option valu3="1">天</option>-->
+                            </select>
+                        </span>
+        </div>
+        年化收益率：<input type="number" style="width:35px;" name="profit1" class="cycle-profit" min="0" max="100" data-required="required"/>%
+        &nbsp;&nbsp;&nbsp; &nbsp;
+        <a class="sAdd btn btn-primary" href="javascript:void(0);" title="" onclick="addCycle(this);">
+            <i class="icon-plus"></i>
+        </a>
+    </div>
+</if>

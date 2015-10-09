@@ -1,0 +1,54 @@
+.select2-drop{z-index:99999 !important;}
+.msgbox_layout_wrap{z-index:100000 !important;}
+.dropdown-menu{min-width: 121px !important;}
+.dropdown-toggle{font-size: 12px !important;}
+.select2-results li{clear:both;}
+th{max-width:250px;}
+td:nth-child(2),td:nth-child(3),td:nth-child(5),td:nth-child(8){text-align: center}
+.icon-search{
+    cursor: pointer;
+    position:absolute;
+    right: 5px;
+    height:28px;
+    border-top: none;
+    border-bottom: none;}
+.data-table .select2-search{
+    width:220px;
+    position:relative;
+    z-index:1;}
+.data-table .select2-search input{
+    background-image: none;
+    background-color: #fff;}
+.sel-one{background-color: #fff;
+    position: absolute;
+    min-width:218px;
+    width:297px;
+    border-width: 0 1px 1px;
+    border-style: none solid solid;
+    z-index: 9999;}
+.sel-one li:hover{
+    background-color: #3875d7;
+    color: #fff;
+    float:left;
+    width:100%}
+.sel-one .select2-result-label{float:left;}
+.select-result2{max-height: 140px;  }
+
+
+
+.badge{line-height: 20px;}
+.user-info{font-weight: normal;float:left;}
+.opt-btn{border-radius: 0;float: right;margin-right: 10px;margin-top: 10px;}
+.dataTables_filter{top:0;}
+.hidden{display: none !important;}
+.project-key{position: relative;float:left;}
+.project-key input{margin-top:3px;}
+#btn_search_one,#btn_search_user{height: 20px;position: absolute;right: 0;top: 3px;}
+.project-status{float:left;padding-top:7px;}
+.project-status select{float:left;}
+.select2-container{position:absolute !important;width:180px;top:3px;}
+.project-key .sel-one{margin-top:-10px;}
+
+
+
+
